@@ -356,7 +356,7 @@ p { margin: 0; }
    NUEVO EN LA VERSIÓN 3: FILTROS, CUPONES, FORMULARIO, BOLETA Y TEMA OSCURO
    ========================================================================= */
 
-/* -------------------------------------------------------------------------
+   /* -------------------------------------------------------------------------
    REASIGNACIÓN LOCAL DE VARIABLES: EL TEMA OSCURO
    JavaScript solo agrega la clase "tema-oscuro" al <body>. No cambia ni un
    color a mano: al redefinir los tokens aquí, TODOS los elementos que usan
@@ -518,6 +518,7 @@ input[type="email"] {
     border-top: 1px solid var(--color-exito);
     padding-top: calc(var(--espaciado-base) * 0.35);
 }
+
 
 
 /* -------------------------------------------------------------------------

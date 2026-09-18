@@ -469,8 +469,6 @@ function dibujarBoleta(nombreCliente, correoCliente, totales) {
 
     panelBoleta.classList.remove("oculto");
 }
-
-
 /* =========================================================================
    8. EVENTOS DE LA APLICACIÓN
    ========================================================================= */
@@ -532,6 +530,8 @@ const aplicarCupon = function () {
     renderizarResumen();
 };
 
+
+
 // 8.3. Evento de ratón + función flecha
 btnDescuento.addEventListener("click", () => {
     aplicarCupon();
@@ -559,7 +559,6 @@ btnTema.addEventListener("click", () => {
         temaOscuro = false;
     }
 });
-
 // 8.6. Formulario de compra: función expresiva que confirma el pedido
 const manejarCompra = function (evento) {
     // preventDefault() cancela la recarga automática de la página
@@ -595,6 +594,7 @@ const manejarCompra = function (evento) {
     mostrarMensaje(`Pedido #${numeroPedido} confirmado`, "exito");
     actualizarPantalla();
 };
+
 formCompra.addEventListener("submit", manejarCompra);
 
 
