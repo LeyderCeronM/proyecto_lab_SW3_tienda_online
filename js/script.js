@@ -561,9 +561,9 @@ btnTema.addEventListener("click", () => {
 });
 // 8.6. Formulario de compra: función expresiva que confirma el pedido
 const manejarCompra = function (evento) {
+    
     // preventDefault() cancela la recarga automática de la página
     evento.preventDefault();
-
     if (carrito.length === 0) {
         mostrarMensaje("Tu carrito está vacío", "error");
         return;
