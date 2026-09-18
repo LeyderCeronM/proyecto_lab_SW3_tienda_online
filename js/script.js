@@ -1,3 +1,4 @@
+
 /* =========================================================================
    TIENDA DE PRODUCTOS - PROYECTO INTEGRADOR (VERSIÓN 3)
    V1 catálogo dinámico  ->  V2 carrito con cantidades  ->  V3 filtros,
@@ -39,7 +40,6 @@ let categoriaActual = "todos";  // String: filtro del catálogo
 let temaOscuro = false;         // Boolean: controla la clase del <body>
 let numeroPedido = 1000;        // Number: contador de pedidos confirmados
 let temporizadorMensaje = null; // Guarda el setTimeout activo del mensaje
-
 
 /* =========================================================================
    2. SELECCIÓN DE ELEMENTOS DEL DOM
@@ -148,7 +148,6 @@ const calcularTotales = () => {
     };
 };
 
-
 /* =========================================================================
    4. DIBUJAR EL CATÁLOGO
    ========================================================================= */
@@ -218,6 +217,7 @@ function renderizarProductos() {
         }
     });
 }
+
 
 
 /* =========================================================================

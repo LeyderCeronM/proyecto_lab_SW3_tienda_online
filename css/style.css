@@ -221,7 +221,6 @@ p { margin: 0; }
     display: none;
 }
 
-
 /* =========================================================================
    NUEVO EN LA VERSIÓN 2: EL PANEL DEL CARRITO
    Ninguna regla inventa colores ni medidas: todas reutilizan los tokens
@@ -350,6 +349,7 @@ p { margin: 0; }
     border-top: 1px solid var(--color-borde);
     padding-top: calc(var(--espaciado-base) * 0.5);
 }
+
 
 
 /* =========================================================================
