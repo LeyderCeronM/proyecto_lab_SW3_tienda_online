@@ -63,7 +63,7 @@ const inputNombre = document.getElementById("input-nombre");
 const inputCorreo = document.getElementById("input-correo");
 
 const mensajeSistema = document.getElementById("mensaje-sistema");
-const panelBoleta    = document.getElementById("panel-boleta");
+const cuerpoHistorial = document.getElementById("cuerpo-historial");
 const avisoConexion  = document.getElementById("aviso-conexion");
 const btnTema        = document.getElementById("btn-tema");
 
@@ -422,52 +422,39 @@ function mostrarMensaje(texto, tipo) {
     }, 3000);
 }
 
-// 7.1. Función declarativa que dibuja la boleta de compra en el panel derecho.
-function dibujarBoleta(nombreCliente, correoCliente, totales) {
+// 7.1. Función declarativa que FABRICA una fila nueva del historial.
+// Antes esta zona sobrescribía un panel de texto (la boleta): cada pedido
+// borraba al anterior. Ahora, en su lugar, se construye una <tr> con sus <td>
+// y se agrega al final del <tbody>, así que los pedidos se van acumulando.
+function agregarFilaHistorial(nombreCliente, totales) {
 
-    // Limpiamos la boleta anterior
-    while (panelBoleta.firstChild) {
-        panelBoleta.removeChild(panelBoleta.firstChild);
-    }
+    // --- PASO 1: fabricamos la FILA (todavía está suelta, fuera del documento)
+    const fila = document.createElement("tr");
 
-    const titulo = document.createElement("h3");
-    titulo.textContent = `Pedido #${numeroPedido} confirmado`;
-    panelBoleta.appendChild(titulo);
+    // --- PASO 2: fabricamos cada CELDA DE DATOS (<td>, no <th>: estas son
+    // celdas de contenido, no encabezados). Una por cada columna de la tabla.
 
-    const datos = document.createElement("p");
-    datos.textContent = `${nombreCliente} · ${correoCliente}`;
-    panelBoleta.appendChild(datos);
+    // Dato extraído del FORMULARIO
+    const celdaCliente = document.createElement("td");
+    celdaCliente.textContent = nombreCliente;
 
-    // Ciclo DO-WHILE: se ejecuta al menos una vez y aquí eso es correcto,
-    // porque solo llegamos a esta función cuando el carrito tiene productos.
-    let i = 0;
-    do {
-        const item = carrito[i];
-        const linea = document.createElement("p");
-        linea.textContent = `${item.cantidad} x ${item.nombre} = ${formatearPrecio(item.precio * item.cantidad)}`;
-        panelBoleta.appendChild(linea);
-        i++;
-    } while (i < carrito.length);
+    // Dato extraído del ESTADO de la aplicación
+    const celdaPedido = document.createElement("td");
+    celdaPedido.textContent = `#${numeroPedido}`;
 
-    // Condicional simple: la línea de ahorro solo aparece si hubo descuento
-    if (totales.descuento > 0) {
-        const ahorro = document.createElement("p");
-        ahorro.textContent = `Ahorraste ${formatearPrecio(totales.descuento)} con tu cupón`;
-        panelBoleta.appendChild(ahorro);
-    }
+    // Dato extraído del CÁLCULO DE TOTALES
+    const celdaTotal = document.createElement("td");
+    celdaTotal.textContent = formatearPrecio(totales.total);
 
-    const envio = document.createElement("p");
-    envio.textContent = (totales.envio === 0)
-        ? "Envío: gratis"
-        : `Envío: ${formatearPrecio(totales.envio)}`;
-    panelBoleta.appendChild(envio);
+    // --- PASO 3: las celdas van DENTRO de la fila, en el orden de los <th>
+    fila.appendChild(celdaCliente);
+    fila.appendChild(celdaPedido);
+    fila.appendChild(celdaTotal);
 
-    const total = document.createElement("p");
-    total.classList.add("boleta-total");
-    total.textContent = `Total pagado: ${formatearPrecio(totales.total)}`;
-    panelBoleta.appendChild(total);
-
-    panelBoleta.classList.remove("oculto");
+    // --- PASO 4: y la fila ya armada va DENTRO del <tbody> de la tabla.
+    // appendChild agrega AL FINAL: por eso las filas anteriores no se tocan
+    // y el <tbody> se convierte en el registro de toda la sesión.
+    cuerpoHistorial.appendChild(fila);
 }
 /* =========================================================================
    8. EVENTOS DE LA APLICACIÓN
@@ -570,10 +557,7 @@ const manejarCompra = function (evento) {
     }
 
     const nombreCliente = inputNombre.value;
-    const correoCliente = inputCorreo.value;
 
-
-    
     // Validación propia además de la que ya hace el HTML con 'required'
     if (nombreCliente.length < 3) {
         mostrarMensaje("Escribe tu nombre completo (mínimo 3 letras)", "error");
@@ -583,7 +567,8 @@ const manejarCompra = function (evento) {
     const totales = calcularTotales();
     numeroPedido++;
 
-    dibujarBoleta(nombreCliente, correoCliente, totales);
+    // En vez de sobrescribir la boleta, agregamos un registro más al historial
+    agregarFilaHistorial(nombreCliente, totales);
 
     // Reiniciamos el estado de la compra (el stock vendido NO se devuelve)
     carrito = [];

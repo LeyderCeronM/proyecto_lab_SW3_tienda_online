@@ -18,6 +18,7 @@
     --color-fondo: #f3f5f2;
     --color-superficie: #ffffff;
     --color-borde: #e2e6e0;
+    --color-borde-historial: #626662;
 
     --color-exito: #15803d;
     --fondo-exito: #dcfce7;
@@ -519,13 +520,29 @@ input[type="email"] {
     border-top: 1px solid var(--color-exito);
     padding-top: calc(var(--espaciado-base) * 0.35);
 }
-
+.seccion-historial h2 {   /* titulo de la sección de historial */
+    font-size: calc(var(--espaciado-base) * 1.05);
+    color: var(--color-primario);
+    text-align: center;
+    margin-bottom: var(--espaciado-tabla-historial);
+}
 .seccion-historial {
-    display: flex;
-    flex-direction: column; /* organizar elementos  forma vertical  y con row de forma horizontal */
-    gap: 10px;
     border-top: 1px solid var(--color-borde);
-    padding-top: var(--espaciado-base);
+    padding-top: 10px;
+}
+
+.tabla-historial {
+    width: 70%;
+    margin: 0 auto;
+    border-collapse: collapse;
+    border: 2px solid var(--color-borde-historial);
+}
+
+.tabla-historial th,
+.tabla-historial td {
+    padding: 8px;
+    text-align: left;
+    border: 2px solid var(--color-borde-historial);
 }
 
 /* -------------------------------------------------------------------------
