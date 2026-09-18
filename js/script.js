@@ -572,6 +572,8 @@ const manejarCompra = function (evento) {
     const nombreCliente = inputNombre.value;
     const correoCliente = inputCorreo.value;
 
+
+    
     // Validación propia además de la que ya hace el HTML con 'required'
     if (nombreCliente.length < 3) {
         mostrarMensaje("Escribe tu nombre completo (mínimo 3 letras)", "error");
