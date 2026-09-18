@@ -28,6 +28,7 @@
 
     /* Escala de espaciado: todo el diseño se calcula a partir de este número */
     --espaciado-base: 16px;
+   
     --radio: 12px;
     --sombra: 0 4px 14px rgba(15, 23, 42, 0.08);
 }
@@ -519,7 +520,13 @@ input[type="email"] {
     padding-top: calc(var(--espaciado-base) * 0.35);
 }
 
-
+.seccion-historial {
+    display: flex;
+    flex-direction: column; /* organizar elementos  forma vertical  y con row de forma horizontal */
+    gap: 10px;
+    border-top: 1px solid var(--color-borde);
+    padding-top: var(--espaciado-base);
+}
 
 /* -------------------------------------------------------------------------
    LA CLASE DE ESTADO VA DE ÚLTIMA

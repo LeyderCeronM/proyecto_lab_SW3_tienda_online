@@ -123,30 +123,29 @@
     </main>
 
     <!-- ==================================================================
-         HISTORIAL DE TRANSACCIONES (Proyecto 2)
+         HISTORIAL DE TRANSACCIONES
          Esqueleto base: los encabezados se escriben aquí, en el HTML.
          El <tbody> llega VACÍO y JavaScript le irá agregando una <tr> por
          cada pedido confirmado, sin borrar las anteriores.
          ================================================================== -->
-    <section class="seccion-historial">
-        <h2>Historial de transacciones</h2>
+    
+        <section class="seccion-historial">
+            <h2>Historial de transacciones</h2>
 
-        <table id="tabla-historial" class="tabla-historial">
-            <thead>
-                <!-- <tr>: una fila. <th>: celda de ENCABEZADO (no de dato) -->
-                <tr>
-                    <th>Cliente</th>
-                    <th>Pedido</th>
-                    <th>Total Pagado</th>
-                </tr>
-            </thead>
-
-            <!-- <tbody>: la zona de datos. Aquí JavaScript hará el appendChild
-                de cada fila nueva; por eso es el único que lleva id. -->
-            <tbody id="cuerpo-historial"></tbody>
-        </table>
-    </section>
-
+            <table id="tabla-historial" class="tabla-historial">
+                <thead>
+                    <!-- <tr>: una fila. <th>: celda de ENCABEZADO (no de dato) -->
+                    <tr>
+                        <th>Cliente</th>    
+                        <th>Pedido</th>
+                        <th>Total Pagado</th>
+                    </tr>
+                </thead>
+                <!-- <tbody>: la zona de datos. Aquí JavaScript hará el appendChild
+                    de cada fila nueva; por eso es el único que lleva id. -->
+                <tbody id="cuerpo-historial"></tbody>
+            </table>
+        </section>
     <footer class="pie">
         <p>Ejemplo académico para el Laboratorio de Ingeniería de Software 3.
         Todo el comportamiento está en <code>js/script.js</code>.</p>
