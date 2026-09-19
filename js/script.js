@@ -16,16 +16,23 @@ const pina        = { id: 2,  nombre: "Piña",            categoria: "fruta",   
 const pera        = { id: 3,  nombre: "Pera",            categoria: "fruta",   precio: 5.45,  stock: 12, icono: "image/pera.png" };
 const melon       = { id: 4,  nombre: "Melón",           categoria: "fruta",   precio: 6.15,  stock: 3,  icono: "image/melon.png" };
 const zanahoria   = { id: 5,  nombre: "Zanahoria",       categoria: "verdura", precio: 3.2,   stock: 14, icono: "image/zanahoria.png" };
-const tomate      = { id: 6,  nombre: "Tomate",          categoria: "verdura", precio: 4.75,  stock: 0,  icono: "image/tomate.png" };
+const tomate      = { id: 6,  nombre: "Tomate",          categoria: "verdura", precio: 4.75,  stock: 2,  icono: "image/tomate.png" };
 const jugo        = { id: 7,  nombre: "Jugo natural",    categoria: "bebida",  precio: 12.0,  stock: 6,  icono: "image/jugo.png" };
 const cocoAgua    = { id: 8,  nombre: "Agua de coco",    categoria: "bebida",  precio: 8.9,   stock: 4,  icono: "image/aguaCoco.png" };
 
 // NUEVO EN LA V3: se amplía el catálogo para tener más opciones que filtrar
 const papaya      = { id: 9,  nombre: "Papaya",          categoria: "fruta",   precio: 7.8,   stock: 9,  icono: "image/papaya.png" };
 const jugoNaranja = { id: 10, nombre: "Jugo de naranja", categoria: "bebida",  precio: 10.5,  stock: 2,  icono: "image/jugoNaranja.png" };
+//Agregados por el programador
+const lechuga     = { id: 11, nombre: "Lechuga",         categoria: "verdura", precio: 2.5,   stock: 10, icono: "image/lechuga.png" };
+const leche       = { id: 12, nombre: "Leche",           categoria: "bebida",  precio: 9.0,   stock: 7,  icono: "image/leche.png" };
+const brocoli     = { id: 13, nombre: "Brócoli",         categoria: "verdura", precio: 5.0,   stock: 5,  icono: "image/brocoli.png" };
+const cafe        = { id: 14, nombre: "Café",            categoria: "bebida",  precio: 15.0,  stock: 3,  icono: "image/cafe.png" }; 
+const queso       = { id: 15, nombre: "Queso",           categoria: "lacteo",  precio: 20.0,  stock: 6,  icono: "image/queso.png" };
+const yogur       = { id: 16, nombre: "Yogur",           categoria: "lacteo",  precio: 12.0,  stock: 8,  icono: "image/yogur.png" };
 
 // Array que contiene todos los objetos del inventario
-const inventarioProductos = [manzana, pina, pera, melon, zanahoria, tomate, jugo, cocoAgua, papaya, jugoNaranja];
+const inventarioProductos = [manzana, pina, pera, melon, zanahoria, tomate, jugo, cocoAgua, papaya, jugoNaranja, lechuga, leche, brocoli, cafe, queso, yogur];
 
 // Valores fijos de las reglas de negocio: constantes en MAYÚSCULAS
 const COSTO_ENVIO = 8;
@@ -119,7 +126,21 @@ const contarUnidades = () => {
     return unidades;
 };
 
-// 3.6. Función flecha: calcula subtotal, descuento, envío y total.
+
+// 3.6. Función flecha: devuelve la fecha y la hora del momento actual.
+// new Date() sin argumentos toma el reloj del computador, y toLocaleString
+// lo escribe con el formato de Colombia (día/mes/año y hora de 12 horas).
+
+
+const formatearFechaHora = () => {
+    const ahora = new Date();
+    return ahora.toLocaleString("es-CO", {
+        dateStyle: "short",
+        timeStyle: "short"
+    });
+};
+
+// 3.7. Función flecha: calcula subtotal, descuento, envío y total.
 // Concentrar el cálculo en un solo lugar evita que el descuento se aplique
 // dos veces o que el comprobante muestre un total distinto al del panel.
 const calcularTotales = () => {
@@ -428,6 +449,22 @@ function mostrarMensaje(texto, tipo) {
 // y se agrega al final del <tbody>, así que los pedidos se van acumulando.
 function agregarFilaHistorial(nombreCliente, totales) {
 
+    // --- PASO 0: armamos el detalle de lo comprado.
+    // OJO con el orden: esto se lee del carrito, así que esta función debe
+    // llamarse ANTES de vaciarlo en manejarCompra.
+    // Ciclo DO-WHILE: se ejecuta al menos una vez y aquí eso es correcto,
+    // porque solo se llega a esta función cuando el carrito tiene productos.
+    let nombresProductos = "";
+    let i = 0;
+    do {
+        const item = carrito[i];
+        // El primero entra solo; a los demás se les antepone una coma
+        nombresProductos = (i === 0)
+            ? item.nombre
+            : `${nombresProductos}, ${item.nombre}`;
+        i++;
+    } while (i < carrito.length);
+
     // --- PASO 1: fabricamos la FILA (todavía está suelta, fuera del documento)
     const fila = document.createElement("tr");
 
@@ -438,6 +475,18 @@ function agregarFilaHistorial(nombreCliente, totales) {
     const celdaCliente = document.createElement("td");
     celdaCliente.textContent = nombreCliente;
 
+    // Dato extraído del CARRITO: todos los productos de este pedido
+    const celdaProducto = document.createElement("td");
+    celdaProducto.textContent = nombresProductos;
+
+    // Dato extraído del CARRITO: suma de unidades de todas las líneas
+    const celdaCantidad = document.createElement("td");
+    celdaCantidad.textContent = contarUnidades();
+
+    // Dato tomado del RELOJ del navegador en el instante de la compra
+    const celdaFecha = document.createElement("td");
+    celdaFecha.textContent = formatearFechaHora();
+
     // Dato extraído del ESTADO de la aplicación
     const celdaPedido = document.createElement("td");
     celdaPedido.textContent = `#${numeroPedido}`;
@@ -446,8 +495,15 @@ function agregarFilaHistorial(nombreCliente, totales) {
     const celdaTotal = document.createElement("td");
     celdaTotal.textContent = formatearPrecio(totales.total);
 
-    // --- PASO 3: las celdas van DENTRO de la fila, en el orden de los <th>
+
+    // --- PASO 3: las celdas van DENTRO de la fila, EN EL MISMO ORDEN de los
+    // <th> del HTML. Si este orden no coincide, los datos salen en la columna
+    // equivocada aunque la tabla se vea bien armada.
     fila.appendChild(celdaCliente);
+    fila.appendChild(celdaProducto);
+
+    fila.appendChild(celdaCantidad);
+    fila.appendChild(celdaFecha);
     fila.appendChild(celdaPedido);
     fila.appendChild(celdaTotal);
 

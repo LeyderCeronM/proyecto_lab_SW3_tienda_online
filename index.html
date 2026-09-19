@@ -54,6 +54,7 @@
                         <option value="fruta">Frutas</option>
                         <option value="verdura">Verduras</option>
                         <option value="bebida">Bebidas</option>
+                        <option value="lacteo">Lácteos</option>
                     </select>
                 </div>
             </div>
@@ -131,9 +132,14 @@
 
             <table id="tabla-historial" class="tabla-historial">
                 <thead>
-                    <!-- <tr>: una fila. <th>: celda de ENCABEZADO (no de dato) -->
+                    <!-- <tr>: una fila. <th>: celda de ENCABEZADO (no de dato).
+                         El ORDEN de estos <th> manda: agregarFilaHistorial()
+                         fabrica sus <td> en esta misma secuencia. -->
                     <tr>
-                        <th>Cliente</th>    
+                        <th>Cliente</th>
+                        <th>Nombre del producto</th>
+                        <th>Cantidad</th>
+                        <th>Fecha y hora</th>
                         <th>Pedido</th>
                         <th>Total Pagado</th>
                     </tr>

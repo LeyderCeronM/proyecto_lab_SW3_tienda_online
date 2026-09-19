@@ -29,7 +29,13 @@
 
     /* Escala de espaciado: todo el diseño se calcula a partir de este número */
     --espaciado-base: 16px;
-   
+
+    
+
+    /* Separación propia de la sección del historial. Se calcula con calc() a
+       partir del espaciado base, igual que el resto del diseño. */
+    
+    --espaciado-tabla-historial: calc(var(--espaciado-base) * 0.75);
     --radio: 12px;
     --sombra: 0 4px 14px rgba(15, 23, 42, 0.08);
 }
@@ -373,6 +379,7 @@ p { margin: 0; }
     --color-fondo: #0f172a;
     --color-superficie: #1e293b;
     --color-borde: #334155;
+    --color-borde-historial: #64748b;
 
     --color-exito: #4ade80;
     --fondo-exito: #14532d;
@@ -543,6 +550,48 @@ input[type="email"] {
     padding: 8px;
     text-align: left;
     border: 2px solid var(--color-borde-historial);
+}
+
+/* Aire entre la tabla y el pie de página */
+.seccion-historial {
+    padding-bottom: calc(var(--espaciado-tabla-historial) * 2);
+}
+
+/* La tabla se apoya en el mismo color de "tarjeta" que el resto de la tienda */
+/* Con seis columnas el 70% de arriba queda muy apretado, así que se amplía.
+   max-width evita que en pantallas muy anchas la tabla se estire de más. */
+.tabla-historial {
+    width: 92%;
+    max-width: 1100px;
+    background-color: var(--color-superficie);
+    font-size: calc(var(--espaciado-base) * 0.85);
+}
+
+/* La columna de la cantidad es un número corto: se ve mejor centrada */
+.tabla-historial th:nth-child(3),
+.tabla-historial td:nth-child(3) {
+    text-align: center;
+}
+
+/* Los encabezados se destacan con el color de marca. Al usar los tokens, el
+   modo oscuro los repinta solo: no hay un solo color escrito a mano aquí. */
+.tabla-historial thead {
+    background-color: var(--color-primario);
+    color: var(--color-texto-boton);
+}
+
+/* :nth-child(even) pinta una fila sí y otra no. Con el historial creciendo
+   hacia abajo, esto ayuda a seguir cada renglón con la vista. */
+.tabla-historial tbody tr:nth-child(even) {
+    background-color: var(--color-fondo);
+}
+
+/* La columna del dinero se lee mejor alineada a la derecha: así las cifras
+   quedan cuadradas por las unidades. Gana sobre el text-align: left de arriba
+   porque este selector es más específico. */
+.tabla-historial th:last-child,
+.tabla-historial td:last-child {
+    text-align: right;
 }
 
 /* -------------------------------------------------------------------------
