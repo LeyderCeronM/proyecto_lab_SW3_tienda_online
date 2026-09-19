@@ -408,7 +408,7 @@ function actualizarPantalla() {
 
 
 /* =========================================================================
-   7. MENSAJES DEL SISTEMA Y COMPROBANTE
+   7. MENSAJES DEL SISTEMA Y FILAS DEL HISTORIAL
    ========================================================================= */
 function mostrarMensaje(texto, tipo) {
     mensajeSistema.textContent = texto;
